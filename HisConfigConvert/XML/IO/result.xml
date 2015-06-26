@@ -1,0 +1,53 @@
+
+------------------------------------------------
+<WriteElement name="ResultCode" ETF_name="RESULT_CODE"
+	necessary="yes" />
+<WriteElement name="ResultMsg" ETF_name="RESULT_MSG"
+	necessary="yes" />
+<WriteElement name="PatientID" ETF_name="PATIENT_ID"
+	necessary="yes" />
+<WriteElement name="Name" ETF_name="NAME" necessary="yes" />
+<WriteElement name="Sex" ETF_name="SEX" necessary="yes" />
+<WriteElement name="Age" ETF_name="AGE" necessary="yes" />
+<WriteElement name="IDCardNo" ETF_name="ID_CARD_NO"
+	necessary="yes" />
+<WriteElement name="Birthday" ETF_name="BIRTHDAY"
+	necessary="yes" />
+------------------------------------------------
+<WriteElement name="CardNo" ETF_name="CARD_NO" necessary="yes" />
+<WriteElement name="CardType" ETF_name="CARD_TYPE"
+	necessary="yes" />
+<WriteElement name="UserID" ETF_name="USER_ID" necessary="yes" />
+<WriteElement name="Startdate" ETF_name="STARTDATE"
+	necessary="yes" />
+<WriteElement name="Enddate" ETF_name="ENDDATE" necessary="yes" />
+------------------------------------------------
+<WriteElement name="ResultCode" ETF_name="RESULT_CODE"
+	necessary="yes" />
+<WriteElement name="ErrorMsg" ETF_name="ERROR_MSG"
+	necessary="yes" />
+<WriteGroupElement name="FeeType" ETF_name="FEE_TYPE"
+	repeat_name="FEE_TYPE_NUM" necessary="yes">
+	<WriteElement name="FeeName" ETF_name="FEE_NAME"
+		necessary="yes" />
+	<WriteElement name="Total" ETF_name="TOTAL" necessary="yes" />
+	<WriteGroupElement name="Item" ETF_name="ITEM"
+		repeat_name="ITEM_NUM" necessary="yes">
+		<WriteElement name="ItemName" ETF_name="ITEM_NAME"
+			necessary="yes" />
+		<WriteElement name="ItemCode" ETF_name="ITEM_CODE"
+			necessary="yes" />
+		<WriteElement name="Specs" ETF_name="SPECS" necessary="yes" />
+		<WriteElement name="Unit" ETF_name="UNIT" necessary="yes" />
+		<WriteElement name="Price" ETF_name="PRICE" necessary="yes" />
+		<WriteElement name="Nums" ETF_name="NUMS" necessary="yes" />
+		<WriteElement name="Cost" ETF_name="COST" necessary="yes" />
+	</WriteGroupElement>
+</WriteGroupElement>
+------------------------------------------------
+<WriteElement name="patCardType" ETF_name="PAT_CARD_TYPE"
+	necessary="yes" />
+<WriteElement name="patCardNo" ETF_name="PAT_CARD_NO"
+	necessary="yes" />
+------------------------------------------------
+<WriteElement name="resultCode" ETF_name="RESULT_CODE" necessary="yes" /><WriteElement name="resultMessage" ETF_name="RESULT_MESSAGE" necessary="yes" /><WriteGroupElement name="item" ETF_name="ITEM" repeat_name="ITEM_NUM" necessary="yes"><WriteElement name="deptName" ETF_name="DEPT_NAME" necessary="yes" /><WriteElement name="deptLocation" ETF_name="DEPT_LOCATION" necessary="yes" /><WriteElement name="doctorName" ETF_name="DOCTOR_NAME" necessary="yes" /><WriteElement name="averageTime" ETF_name="AVERAGE_TIME" necessary="yes" /><WriteElement name="serialNum" ETF_name="SERIAL_NUM" necessary="yes" /><WriteElement name="currentNum" ETF_name="CURRENT_NUM" necessary="yes" /><WriteElement name="frontNum" ETF_name="FRONT_NUM" necessary="yes" /><WriteElement name="expectTime" ETF_name="EXPECT_TIME" necessary="yes" /></WriteGroupElement>

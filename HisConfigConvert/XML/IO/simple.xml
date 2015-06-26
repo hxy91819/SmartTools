@@ -1,0 +1,14 @@
+<Response>
+   <resultCode></resultCode>
+   <resultMessage></resultMessage>
+   <item>
+      <deptName></deptName>
+      <deptLocation></deptLocation>
+      <doctorName></doctorName>
+      <averageTime></averageTime>
+      <serialNum></serialNum>
+      <currentNum></currentNum>
+      <frontNum></frontNum>
+      <expectTime></expectTime>
+   </item>
+</Response>

@@ -1,0 +1,77 @@
+Function:
+================================
+Using to convert this XML:
+-----------------------------
+<Response>
+	<ResultCode></ResultCode>
+	<ResultMsg />
+	<PatientID></PatientID>
+	<Name></Name>
+	<Sex></Sex>
+	<Age></Age>
+	<IDCardNo></IDCardNo>
+	<Birthday></Birthday>
+</Response>
+----------------------------
+to this:
+-----------------------------
+<WriteElement name="ResultCode" ETF_name="RESULT_CODE"
+	necessary="yes" />
+<WriteElement name="ResultMsg" ETF_name="RESULT_MSG"
+	necessary="yes" />
+<WriteElement name="PatientID" ETF_name="PATIENT_ID"
+	necessary="yes" />
+<WriteElement name="Name" ETF_name="NAME" necessary="yes" />
+<WriteElement name="Sex" ETF_name="SEX" necessary="yes" />
+<WriteElement name="Age" ETF_name="AGE" necessary="yes" />
+<WriteElement name="IDCardNo" ETF_name="ID_CARD_NO"
+	necessary="yes" />
+<WriteElement name="Birthday" ETF_name="BIRTHDAY"
+	necessary="yes" />
+------------------------------
+or this:
+-----------------------------
+<ReadElement name="ResultCode" ETF_name="RESULT_CODE"
+	necessary="yes" />
+<ReadElement name="ResultMsg" ETF_name="RESULT_MSG"
+	necessary="yes" />
+<ReadElement name="PatientID" ETF_name="PATIENT_ID"
+	necessary="yes" />
+<ReadElement name="Name" ETF_name="NAME" necessary="yes" />
+<ReadElement name="Sex" ETF_name="SEX" necessary="yes" />
+<ReadElement name="Age" ETF_name="AGE" necessary="yes" />
+<ReadElement name="IDCardNo" ETF_name="ID_CARD_NO"
+	necessary="yes" />
+<ReadElement name="Birthday" ETF_name="BIRTHDAY" necessary="yes" />
+-----------------------------
+================================
+
+
+Update history:
+===============================
+2015-05-21
+·新增test单元测试目录
+·新增XML目录用于处理待转换的XML
+
+2015-05-22
+·新增包com.hxy.fileIO，用于处理文件IO
+
+2015-06-05
+·comments:
+·src folder：test是一个单元测试文件夹，基于JUnit 3.8
+·新增的文件夹XML/IO，目录下simple.xml里面存储待转换的XML；result.xml存储生成的Request XML，resultRead.xml存储生成的Response XML。
+================================
+
+
+Something perpare to do:
+================================
+1 add some comments behind each element, such as:
+-----------------------------
+<ReadElement name="ResultCode" ETF_name="RESULT_CODE" necessary="yes" /><!-- this is a flag -->
+-----------------------------
+2 use a database to convert some elements to certain result, such as:
+-----------------------------
+ResultCode to CAL_RSP_FLG;
+ErrorMsg to CAL_RSP_DES;
+-----------------------------
+================================
