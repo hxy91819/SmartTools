@@ -3,6 +3,7 @@ package com.hxy.generateInsert;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.hxy.content.StringHelper;
 import com.hxy.generateInsert.table.CMMTHISBUI;
 
 /**
@@ -51,7 +52,7 @@ public class Client {
 			table.setSort_no(sort_no);
 			
 			
-			String bui_cd = par_bui_cd + Client.addZeroForNum(sort_no, 3);
+			String bui_cd = par_bui_cd + StringHelper.polishString(sort_no, 3, "0");
 			table.setBui_cd(bui_cd);
 			
 			String bui_nm = sort_no + "F";
@@ -64,24 +65,4 @@ public class Client {
 		return returnValString;
 	}
 
-	/**
-	 * ²¹Æë×Ö·û
-	 * 
-	 * @param str
-	 * @param strLength
-	 * @return
-	 */
-	public static String addZeroForNum(String str, int strLength) {
-		int strLen = str.length();
-		if (strLen < strLength) {
-			while (strLen < strLength) {
-				StringBuffer sb = new StringBuffer();
-				sb.append("0").append(str);// ×ó²¹0
-				// sb.append(str).append("0");//ÓÒ²¹0
-				str = sb.toString();
-				strLen = str.length();
-			}
-		}
-		return str;
-	}
 }
