@@ -18,27 +18,27 @@ public class Client {
 
 		String[] splitStrings = test.split("]:");
 
-		for (String string : splitStrings) {
-			System.out.println(string);
-		}
+//		for (String string : splitStrings) {
+//			System.out.println(string);
+//		}
 
 		// 分割的第一段为FORMAT，第二段为PARAMS
 		// 处理第一段的[]
 		String formatString = splitStrings[0].replace("[", "");
 		formatString = formatString.replace("]", "");
-		System.out.println(formatString);
+//		System.out.println(formatString);
 		// 处理第一段的?为%s
 		formatString = formatString.replace("?", "'%s'");
-		System.out.println(formatString);
+//		System.out.println(formatString);
 
 		// 处理第二段[]
 		String paramsString = splitStrings[1].replace("[", "");
 		paramsString = paramsString.replace("]", "");
 		// 第二段根据,分割
 		String[] paramsStrings = paramsString.split(",");
-		for (String string : paramsStrings) {
-			System.out.println(string);
-		}
+//		for (String string : paramsStrings) {
+//			System.out.println(string);
+//		}
 
 		Object[] paramsObject = new Object[paramsStrings.length];
 		for (int i = 0; i < paramsStrings.length; i++) {
@@ -47,7 +47,7 @@ public class Client {
 		}
 		
 		//组合
-		System.out.println("--------------------");
-		System.out.println(String.format(formatString, paramsObject));
+//		System.out.println("--------------------");
+		System.out.print(String.format(formatString, paramsObject) + ";");
 	}
 }

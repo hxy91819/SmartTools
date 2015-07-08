@@ -1,11 +1,2 @@
-[SELECT A.REG_DEP_NM AS CONT_NM, A.DEP_CD, B.REG_DEP_NM AS
-                                DEP_PAR_NM
-                                FROM REGTDEP A,REGTDEP B
-                                WHERE A.HIS_CD = ?
-                                AND A.DEP_NM
-                                LIKE ?
-                                AND A.DEP_BRA_TYP = '1'
-                                AND (A.DEP_SHO_MOD = ? OR A.DEP_SHO_MOD
-                                = '3')
-                                AND A.DEP_PAR_CD = B.DEP_CD(+)
-                                AND A.HIS_CD = B.HIS_CD(+)]:[[26, %жа%, 2]]
+SELECT BUS_URL FROM CMMTBUSURL
+                        WHERE HIS_CD = ? AND BUS_CNL = ? AND BUS_TYP = ?]:[[33, WX, YYGH]]
