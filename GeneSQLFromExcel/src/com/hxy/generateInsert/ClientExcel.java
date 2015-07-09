@@ -18,7 +18,7 @@ public class ClientExcel
 		{
 			// 构建Workbook对象, 只读Workbook对象
 			// 直接从本地文件创建Workbook
-			InputStream instream = new FileInputStream("E:/科室分布整合-四级科室.xls");
+			InputStream instream = new FileInputStream("E:/test.xls");
 			readwb = Workbook.getWorkbook(instream);
 			// Sheet的下标是从0开始
 			// 获取第一张Sheet表
