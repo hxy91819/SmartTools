@@ -1,0 +1,12 @@
+<request>
+	<serviceCode>OutpatientPaymentNotice</serviceCode>
+	<timeStamp>%s</timeStamp>
+	<partnerId>%s</partnerId>
+	<password>%s</password>
+	<cardType>1</cardType>
+	<cardNo>000002026</cardNo>
+	<patName>吕静</patName>
+	<deptName>中医妇科</deptName>
+	<doctorName>管理员</doctorName>
+	<payAmout>1200</payAmout>
+</request>
