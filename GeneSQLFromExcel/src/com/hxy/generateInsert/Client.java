@@ -27,22 +27,27 @@ public class Client {
 	}
 
 	/**
-	 * 根据指定需求生成SQL语句
+	 * 根据输入的参数生成相应的Insert SQL并返回
 	 * 
-	 * 用于生成楼层
-	 * 
+	 * @param bui_cd
+	 *            建筑编号
+	 * @param bui_nm
+	 *            建筑名称
 	 * @param par_bui_cd
-	 *            父节点编号
-	 * @param num
-	 *            需要生成的数量
-	 * @return
+	 *            建筑的父建筑编号
+	 * @param bui_lv
+	 *            建筑的层级
+	 * @param sort_no
+	 *            建筑的排序号
+	 * @return 生成好的Insert SQL
 	 */
-	private static String getNeedSQL(String bui_cd, String bui_nm,
-			String par_bui_cd, String bui_lv, String sort_no) {
+	private static String getNeedSQL(String bui_cd, String bui_nm, String par_bui_cd, String bui_lv, String sort_no) {
+		// 生成时间戳的格式模版
 		Date currentTime = new Date();
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 		String dateString = formatter.format(currentTime);
 
+		// 从配置文件中读取参数
 		String his_cd = Constant.his_cd;
 		String are_no = Constant.are_id;
 
@@ -64,6 +69,9 @@ public class Client {
 		return returnValString;
 	}
 
+	/**
+	 * 从Excel中读取建筑数据，并打印出Insert SQL TODO 需要改进算法，修改成递归模式，并可以任意读取多级建筑
+	 */
 	private static void readFromExcel() {
 		jxl.Workbook readwb = null;
 		try {
@@ -85,16 +93,14 @@ public class Client {
 			for (int i = 1; i < rsRows; i++) {
 				int j = 0;
 				Cell cell = readsheet.getCell(j, i);
-				String cellContentsString = StringHelper.Trim(cell
-						.getContents());
+				String cellContentsString = StringHelper.Trim(cell.getContents());
 				if (!cellContentsString.equals("")) {
 					bui_index_lv1++;
 
 					// 如果存在下级建筑，则保存
 					if ((i + 1 < rsRows) && (j + 1 < rsColumns)) {
 						Cell nextLvCell = readsheet.getCell(j + 1, i + 1);
-						String nextLvCellContent = StringHelper.Trim(nextLvCell
-								.getContents());
+						String nextLvCellContent = StringHelper.Trim(nextLvCell.getContents());
 						if (!nextLvCellContent.equals("")) {
 							mapLv1.put(i, bui_index_lv1);
 						}
@@ -102,17 +108,19 @@ public class Client {
 
 					String returnSQL = Client.getNeedSQL(
 							Integer.toString(bui_index_lv1),
-							cellContentsString, "-1", "1",
+							cellContentsString,
+							"-1",
+							"1",
 							Integer.toString(bui_index_lv1));// 一级建筑父ID均为-1，级别为1，序号与bui_cd相同。
 					System.out.println(returnSQL);
 				}
 			}
 
 			System.out.println("--=====================以下是二级建筑====================");
-			
+
 			int bui_index_lv2 = 0;// 二级建筑的建筑序号
-			TreeMap<Integer, Integer> mapLv2 = new TreeMap<Integer, Integer>();
-			Integer[] keyArrObjectLv1 = mapLv1.keySet().toArray(new Integer[0]);
+			TreeMap<Integer, Integer> mapLv2 = new TreeMap<Integer, Integer>();// 用于保存二级建筑对应关系的map，key：excel行号；Value：此行号下对应的bui_cd
+			Integer[] keyArrObjectLv1 = mapLv1.keySet().toArray(new Integer[0]);//maplv1的keySet转化为容易处理的数组
 			// 再生成二级建筑的
 			for (int keyIndex = 0; keyIndex < keyArrObjectLv1.length; keyIndex++) {
 				int lvAdd = mapLv1.get(keyArrObjectLv1[keyIndex]) * 1000;// bui_cd权重
@@ -132,16 +140,14 @@ public class Client {
 				for (int i = keyArrObjectLv1[keyIndex] + 1; i < endRow; i++) {
 					int j = 1;
 					Cell cell = readsheet.getCell(j, i);
-					String cellContentsString = StringHelper.Trim(cell
-							.getContents());
+					String cellContentsString = StringHelper.Trim(cell.getContents());
 					if (!cellContentsString.equals("")) {
 						bui_index_lv2++;
 
 						// 如果存在下级建筑，则保存
 						if ((i + 1 < rsRows) && (j + 1 < rsColumns)) {
 							Cell nextLvCell = readsheet.getCell(j + 1, i + 1);
-							String nextLvCellContent = StringHelper
-									.Trim(nextLvCell.getContents());
+							String nextLvCellContent = StringHelper.Trim(nextLvCell.getContents());
 							if (!nextLvCellContent.equals("")) {
 								mapLv2.put(i, bui_index_lv2 + lvAdd);
 							}
@@ -150,8 +156,7 @@ public class Client {
 						String returnSQL = Client.getNeedSQL(
 								Integer.toString(bui_index_lv2 + lvAdd),
 								cellContentsString,
-								Integer.toString(mapLv1
-										.get(keyArrObjectLv1[keyIndex])),
+								Integer.toString(mapLv1.get(keyArrObjectLv1[keyIndex])),
 								Integer.toString(j + 1),
 								Integer.toString(bui_index_lv2));
 						System.out.println(returnSQL);
@@ -160,7 +165,7 @@ public class Client {
 			}
 
 			System.out.println("--====================以下是三级建筑=====================");
-			
+
 			// 生成三级建筑的
 			int bui_index_lv3 = 0;// 三级建筑的建筑序号
 			TreeMap<Integer, Long> mapLv3 = new TreeMap<Integer, Long>();
@@ -184,34 +189,32 @@ public class Client {
 				for (int i = keyArrObjectLv2[keyIndex] + 1; i < endRow; i++) {
 					int j = 2;
 					Cell cell = readsheet.getCell(j, i);
-					String cellContentsString = StringHelper.Trim(cell
-							.getContents());
+					String cellContentsString = StringHelper.Trim(cell.getContents());
 					if (!cellContentsString.equals("")) {
 						bui_index_lv3++;
 
 						// 如果存在下级建筑，则保存
 						if ((i + 1 < rsRows) && (j + 1 < rsColumns)) {
 							Cell nextLvCell = readsheet.getCell(j + 1, i + 1);
-							String nextLvCellContent = StringHelper
-									.Trim(nextLvCell.getContents());
+							String nextLvCellContent = StringHelper.Trim(nextLvCell.getContents());
 							if (!nextLvCellContent.equals("")) {
 								mapLv3.put(i, bui_index_lv3 + lvAdd);
 							}
 						}
 
-						String returnSQL = Client.getNeedSQL(Long
-								.toString(bui_index_lv3 + lvAdd),
-								cellContentsString, Integer.toString(mapLv2
-										.get(keyArrObjectLv2[keyIndex])),
-								Integer.toString(j + 1), Integer
-										.toString(bui_index_lv3));
+						String returnSQL = Client.getNeedSQL(
+								Long.toString(bui_index_lv3 + lvAdd), cellContentsString,
+								Integer.toString(mapLv2.get(keyArrObjectLv2[keyIndex])),
+								Integer.toString(j + 1),
+								Integer.toString(bui_index_lv3));
+
 						System.out.println(returnSQL);
 					}
 				}
 			}
 
 			System.out.println("--=====================以下是四级建筑====================");
-			
+
 			// 生成四级建筑的
 			int bui_index_lv4 = 0;// 四级建筑的建筑序号
 			TreeMap<Integer, Long> mapLv4 = new TreeMap<Integer, Long>();
@@ -236,27 +239,24 @@ public class Client {
 				for (int i = keyArrObjectLv3[keyIndex] + 1; i < endRow; i++) {
 					int j = 3;
 					Cell cell = readsheet.getCell(j, i);
-					String cellContentsString = StringHelper.Trim(cell
-							.getContents());
+					String cellContentsString = StringHelper.Trim(cell.getContents());
 					if (!cellContentsString.equals("")) {
 						bui_index_lv4++;
 
 						// 如果存在下级建筑，则保存
 						if ((i + 1 < rsRows) && (j + 1 < rsColumns)) {
 							Cell nextLvCell = readsheet.getCell(j + 1, i + 1);
-							String nextLvCellContent = StringHelper
-									.Trim(nextLvCell.getContents());
+							String nextLvCellContent = StringHelper.Trim(nextLvCell.getContents());
 							if (!nextLvCellContent.equals("")) {
 								mapLv4.put(i, bui_index_lv4 + lvAdd);
 							}
 						}
 
-						String returnSQL = Client.getNeedSQL(Long
-								.toString(bui_index_lv4 + lvAdd),
-								cellContentsString, Long.toString(mapLv3
-										.get(keyArrObjectLv3[keyIndex])),
-								Integer.toString(j + 1), Integer
-										.toString(bui_index_lv4));
+						String returnSQL = Client.getNeedSQL(
+								Long.toString(bui_index_lv4 + lvAdd), cellContentsString,
+								Long.toString(mapLv3.get(keyArrObjectLv3[keyIndex])),
+								Integer.toString(j + 1),
+								Integer.toString(bui_index_lv4));
 						System.out.println(returnSQL);
 					}
 				}

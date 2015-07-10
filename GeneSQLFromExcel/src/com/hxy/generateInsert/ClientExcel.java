@@ -7,6 +7,11 @@ import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 
+/**
+ * 包含对此Excel操作Jar的原操作
+ * @author hxy
+ *
+ */
 public class ClientExcel
 
 {
