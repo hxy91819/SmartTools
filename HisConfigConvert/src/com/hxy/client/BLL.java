@@ -35,7 +35,7 @@ public class BLL {
 						&& nodeName.charAt(i - 1) <= 90) {
 					// 如果i前一个字符也为大写
 					if (i <= nodeName.length() - 2) {
-						//存在后一个字符（在index上加1的时候，要考虑越界的风险）
+						// 存在后一个字符（在index上加1的时候，要考虑越界的风险）
 						if (nodeName.charAt(i + 1) >= 97
 								&& nodeName.charAt(i + 1) <= 122) {
 							// 但后一个字符为小写

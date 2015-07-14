@@ -120,7 +120,7 @@ public class Client {
 
 			int bui_index_lv2 = 0;// 二级建筑的建筑序号
 			TreeMap<Integer, Integer> mapLv2 = new TreeMap<Integer, Integer>();// 用于保存二级建筑对应关系的map，key：excel行号；Value：此行号下对应的bui_cd
-			Integer[] keyArrObjectLv1 = mapLv1.keySet().toArray(new Integer[0]);//maplv1的keySet转化为容易处理的数组
+			Integer[] keyArrObjectLv1 = mapLv1.keySet().toArray(new Integer[0]);// maplv1的keySet转化为容易处理的数组
 			// 再生成二级建筑的
 			for (int keyIndex = 0; keyIndex < keyArrObjectLv1.length; keyIndex++) {
 				int lvAdd = mapLv1.get(keyArrObjectLv1[keyIndex]) * 1000;// bui_cd权重
