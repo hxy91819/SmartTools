@@ -1,6 +1,0 @@
-[SELECT BUI_CD, BUI_NM
-            FROM CMMTHISBUI
-            WHERE HIS_CD = ?
-            AND BUI_LV = '4'
-            AND PAR_BUI_CD = ?
-            ORDER BY SORT_NO]:[[26, 6001001]]

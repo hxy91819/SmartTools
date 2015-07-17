@@ -20,7 +20,6 @@ public class FileHelper {
 		StringBuffer buffer = new StringBuffer();//中间存储。
 		try {
 			buffer.setLength(0);//清空buffer
-			//System.out.println("以字符为单位读取文件内容，一次读一个字节：");
 			// 一次读一个字符
 			reader = new InputStreamReader(new FileInputStream(file));
 			int tempchar;
