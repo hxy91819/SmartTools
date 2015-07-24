@@ -22,12 +22,12 @@ import com.hxy.generateInsert.table.CMMTHISBUI;
 public class Client {
 
 	public static void main(String[] args) {
-		// System.out.println(Client.getNeedSQL("6001", 7, "3"));
-		Client.readFromExcel();
+//		Client.readFromExcelCMMTHISBUI();
+	    
 	}
 
 	/**
-	 * 根据输入的参数生成相应的Insert SQL并返回
+	 * CMMTHISBUI:根据输入的参数生成相应的Insert SQL并返回
 	 * 
 	 * @param bui_cd
 	 *            建筑编号
@@ -41,7 +41,7 @@ public class Client {
 	 *            建筑的排序号
 	 * @return 生成好的Insert SQL
 	 */
-	private static String getNeedSQL(String bui_cd, String bui_nm, String par_bui_cd, String bui_lv, String sort_no) {
+	private static String setParamsCMMTHISBUI(String bui_cd, String bui_nm, String par_bui_cd, String bui_lv, String sort_no) {
 		// 生成时间戳的格式模版
 		Date currentTime = new Date();
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -70,9 +70,10 @@ public class Client {
 	}
 
 	/**
-	 * 从Excel中读取建筑数据，并打印出Insert SQL TODO 需要改进算法，修改成递归模式，并可以任意读取多级建筑
+	 * CMMTHISBUI:从Excel中读取建筑数据，并打印出Insert SQL TODO 需要改进算法，修改成递归模式，并可以任意读取多级建筑
 	 */
-	private static void readFromExcel() {
+	@SuppressWarnings("unused")
+    private static void readFromExcelCMMTHISBUI() {
 		jxl.Workbook readwb = null;
 		try {
 			// 构建Workbook对象, 只读Workbook对象
@@ -106,7 +107,7 @@ public class Client {
 						}
 					}
 
-					String returnSQL = Client.getNeedSQL(
+					String returnSQL = Client.setParamsCMMTHISBUI(
 							Integer.toString(bui_index_lv1),
 							cellContentsString,
 							"-1",
@@ -153,7 +154,7 @@ public class Client {
 							}
 						}
 
-						String returnSQL = Client.getNeedSQL(
+						String returnSQL = Client.setParamsCMMTHISBUI(
 								Integer.toString(bui_index_lv2 + lvAdd),
 								cellContentsString,
 								Integer.toString(mapLv1.get(keyArrObjectLv1[keyIndex])),
@@ -202,7 +203,7 @@ public class Client {
 							}
 						}
 
-						String returnSQL = Client.getNeedSQL(
+						String returnSQL = Client.setParamsCMMTHISBUI(
 								Long.toString(bui_index_lv3 + lvAdd), cellContentsString,
 								Integer.toString(mapLv2.get(keyArrObjectLv2[keyIndex])),
 								Integer.toString(j + 1),
@@ -252,7 +253,7 @@ public class Client {
 							}
 						}
 
-						String returnSQL = Client.getNeedSQL(
+						String returnSQL = Client.setParamsCMMTHISBUI(
 								Long.toString(bui_index_lv4 + lvAdd), cellContentsString,
 								Long.toString(mapLv3.get(keyArrObjectLv3[keyIndex])),
 								Integer.toString(j + 1),

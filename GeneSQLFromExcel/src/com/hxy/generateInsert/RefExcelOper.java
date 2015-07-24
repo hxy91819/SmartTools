@@ -8,11 +8,11 @@ import jxl.Sheet;
 import jxl.Workbook;
 
 /**
- * 包含对此Excel操作Jar的原操作
+ * 包含对此Excel操作Jar的原操作，用于参考
  * @author hxy
  *
  */
-public class ClientExcel
+public class RefExcelOper
 
 {
 

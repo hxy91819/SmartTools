@@ -90,4 +90,6 @@ public class CMMTHISBUI {
 		insertSQL = String.format(fmtSQL, getHis_cd(), getBui_cd(), getBui_nm(), getBui_lv(), getPar_bui_cd(), getSort_no(), getTm_smp(), getAre_id());
 		return insertSQL;
 	}
+
+	
 }

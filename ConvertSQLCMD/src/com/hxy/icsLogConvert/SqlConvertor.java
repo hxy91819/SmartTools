@@ -3,43 +3,48 @@ package com.hxy.icsLogConvert;
 import com.hxy.content.StringHelper;
 
 /**
- * ÓÃÓÚ×ª»»ICSÈÕÖ¾ÖĞµÄSQLÎª¿ÉÖ´ĞĞSQL
+ * è½¬æ¢ICSæ—¥å¿—ä¸ºSQL
  * 
  * @author hxy
  *
  */
 public class SqlConvertor {
-	public static String getSQL(String forConvert) {
-	    if(forConvert.equals("")){
-	        return "--[Empty error]";
-	    }
+    public static void main(String[] args) {
+        String forTransString = "sadfj;lsdjfa;lsdf";
+        System.out.println(SqlConvertor.getSQL(forTransString));
+    }
 
-		String[] splitStrings = forConvert.split("]:");
+    public static String getSQL(String forConvert) {
+        if (forConvert.equals("")) {
+            return "--[Empty error]";
+        }
 
-		if(splitStrings.length < 2){
-		    return "--[Format error]" + forConvert;
-		}
+        String[] splitStrings = forConvert.split("\\]\\:");//å¤šä¸ªå­—ç¬¦éœ€è¦ä½¿ç”¨æ­£åˆ™è¡¨è¾¾å¼\\è½¬ä¹‰ã€‚
 
-		// ·Ö¸îµÄµÚÒ»¶ÎÎªFORMAT£¬µÚ¶ş¶ÎÎªPARAMS
-		// ´¦ÀíµÚÒ»¶ÎµÄ[]
-		String formatString = splitStrings[0].replace("[", "");
-		formatString = formatString.replace("]", "");
-		// ´¦ÀíµÚÒ»¶ÎµÄ?Îª%s
-		formatString = formatString.replace("?", "'%s'");
+        if (splitStrings.length < 2) {
+            //æ­¤æ—¶åˆ†å‰²å¤±è´¥ï¼Œå°è¯•ä½¿ç”¨â€œ][â€æ¥è¿›è¡Œåˆ†å‰²
+            splitStrings = forConvert.split("\\]\\[");
+            if (splitStrings.length < 2) {
+                return "--[Format error]" + forConvert;
+            }
+        }
 
-		// ´¦ÀíµÚ¶ş¶Î[]
-		String paramsString = splitStrings[1].replace("[", "");
-		paramsString = paramsString.replace("]", "");
-		// µÚ¶ş¶Î¸ù¾İ,·Ö¸î
-		String[] paramsStrings = paramsString.split(",");
+        //è¿‡æ»¤æ‰[]ï¼Œæ›¿æ¢ä½ ?å·ä¸º'%s'ï¼Œç„¶åä½¿ç”¨String.formatå®Œæˆå­—ç¬¦ä¸²
+        String formatString = splitStrings[0].replace("[", "");
+        formatString = formatString.replace("]", "");
 
-		Object[] paramsObject = new Object[paramsStrings.length];
-		for (int i = 0; i < paramsStrings.length; i++) {
-			// ½«·Ö¸îµÄ½á¹û´¦ÀíµôÁ½±ß¿Õ¸ñºó£¬Ìí¼Óµ½ObjectÖĞ
-			paramsObject[i] = (Object) StringHelper.Trim(paramsStrings[i]);
-		}
+        formatString = formatString.replace("?", "'%s'");
 
-		// ×éºÏ
-		return String.format(formatString, paramsObject) + ";";
-	}
+        String paramsString = splitStrings[1].replace("[", "");
+        paramsString = paramsString.replace("]", "");
+        // 
+        String[] paramsStrings = paramsString.split(",");
+
+        Object[] paramsObject = new Object[paramsStrings.length];
+        for (int i = 0; i < paramsStrings.length; i++) {
+            paramsObject[i] = (Object) StringHelper.Trim(paramsStrings[i]);
+        }
+
+        return String.format(formatString, paramsObject) + ";";
+    }
 }
