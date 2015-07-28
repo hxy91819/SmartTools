@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class StringHelper {
 	/**
-	 * 去除String两侧空格
+	 * 鍘婚櫎String宸﹀彸涓ょ绌烘牸
 	 * @param string
 	 * @return
 	 */
@@ -24,16 +24,16 @@ public class StringHelper {
 	}
 
 	/**
-	 * 为String按某一长度补齐某字符
+	 * 琛ラ綈String
 	 * 
 	 * @param inputStr
-	 *            入参
+	 *            寰呰浆鎹tring
 	 * @param strLength
-	 *            目标String长度
+	 *            杞崲鍚嶴tring闀垮害
 	 * @param subString
-	 *            补齐用的字符
+	 *            鐢ㄦ潵琛ラ綈鐨凷tring
 	 * @param leftStr
-	 *            在左边补0？
+	 *            鏄惁鏄湪宸︿晶娣诲姞
 	 * @return
 	 */
 	public static String polishString(String inputStr, int strLength,
@@ -42,7 +42,7 @@ public class StringHelper {
 	}
 
 	/**
-	 * 默认左补齐
+	 * 默锟斤拷锟斤拷锟斤拷
 	 * 
 	 * @param inputStr
 	 * @param strLength
@@ -55,7 +55,7 @@ public class StringHelper {
 	}
 
 	/**
-	 * 原子补齐函数
+	 * 原锟接诧拷锟诫函锟斤拷
 	 * 
 	 * @return
 	 */
@@ -66,9 +66,9 @@ public class StringHelper {
 			while (strLen < strLength) {
 				StringBuffer sb = new StringBuffer();
 				if (leftStr) {
-					sb.append(subString).append(inputStr);// 左补0
+					sb.append(subString).append(inputStr);// 锟斤拷0
 				} else {
-					sb.append(inputStr).append(subString);// 右补0
+					sb.append(inputStr).append(subString);// 锟揭诧拷0
 				}
 				inputStr = sb.toString();
 				strLen = inputStr.length();
@@ -78,7 +78,7 @@ public class StringHelper {
 	}
 
 	/**
-	 * 获取String的MD5
+	 * 锟斤拷取String锟斤拷MD5
 	 * @param str
 	 * @return
 	 */

@@ -2,13 +2,13 @@ package com.hxy.IO;
 
 public class PathHelper {
 	/**
-	 * »ñÈ¡²»°üº¬"/bin"µÄÏîÄ¿Â·¾¶
+	 * èŽ·å¾—é¡¹ç›®è·¯å¾„ï¼Œå¹¶åŽ»é™¤Bin
 	 * 
 	 * @return
 	 */
 	public static String getProjectPathWithoutBin(Object object) {
-		String originPath = object.getClass().getResource("/").getPath();// »ñÈ¡Ô­Ê¼µÄÏîÄ¿Â·¾¶
+		String originPath = object.getClass().getResource("/").getPath();// ï¿½ï¿½È¡Ô­Ê¼ï¿½ï¿½ï¿½ï¿½Ä¿Â·ï¿½ï¿½
 
-		return originPath.substring(0, originPath.length() - 4); // È¥³ýÔ­Ê¼ÏîÄ¿Â·¾¶ºóÃæµÄ/bin
+		return originPath.substring(0, originPath.length() - 4); // È¥ï¿½ï¿½Ô­Ê¼ï¿½ï¿½Ä¿Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/bin
 	}
 }

@@ -2,48 +2,38 @@ package com.hxy.client;
 
 public class BLL {
 	/**
-	 * ×ª»¯XML½ÚµãÃû³ÆÎªETFÃû³Æ
-	 * 
-	 * ¹æÔò£º
-	 * 
-	 * ¡¤Èç¹ûÈ«Îª´óĞ´£¬Ôò²»×ª»»
-	 * 
-	 * ¡¤³ıµÚÒ»¸ö×ÖÄ¸£¬Óöµ½´óĞ´×ÖÄ¸£¬ÔÚÇ°ÃæÌí¼Ó¡°_¡±
-	 * 
-	 * ¡¤´óĞ´×ÖÄ¸Èç¹ûÊÇÁ¬ĞøµÄ£¬ÈôÇ°Ò»¸ö²»ÊÇ´óĞ´£¬ÔòÌí¼Ó¡£ÈôÇ°Ò»¸öÊÇ´óĞ´£¬ºóÒ»¸öÊÇĞ¡Ğ´£¬ÔòÌí¼Ó¡£ÈôÇ°ºó¶¼Îª´óĞ´£¬Ôò²»Ìí¼Ó
-	 * 
-	 * °æ±¾£ºV1.0
+	 * è½¬æ¢nodeNameä¸ºETFå‘½å
 	 * 
 	 * @param nodeName
 	 * @return
 	 */
 	public static String convertToETFName(String nodeName) {
-		String upperNodeName = nodeName.toUpperCase();// ×ª»»Îª´óĞ´µÈ´ıÅĞ¶Ï
+		String upperNodeName = nodeName.toUpperCase();// ×ªï¿½ï¿½Îªï¿½ï¿½Ğ´ï¿½È´ï¿½ï¿½Ğ¶ï¿½
 
-		StringBuffer buffer = new StringBuffer();// Æ´½Ó¡°_¡±Ê¹ÓÃµÄÁÙÊ±´æ´¢
+		StringBuffer buffer = new StringBuffer();// Æ´ï¿½Ó¡ï¿½_ï¿½ï¿½Ê¹ï¿½Ãµï¿½ï¿½ï¿½Ê±ï¿½æ´¢
 
-		// Èç¹ûÈ«Îª´óĞ´£¬Ôò²»×ª»»
+		// ï¿½ï¿½ï¿½È«Îªï¿½ï¿½Ğ´ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½
 		if (upperNodeName.equals(nodeName)) {
 			return nodeName;
 		}
 
-		buffer.setLength(0);// Çå¿Õbuffer
+		buffer.setLength(0);// ï¿½ï¿½ï¿½buffer
 		for (int i = 0; i < nodeName.length(); i++) {
 			if (nodeName.charAt(i) >= 65 && nodeName.charAt(i) <= 90 && i != 0) {
-				// Èç¹ûi´¦Îª´óĞ´ÇÒ²»ÊÇµÚÒ»¸ö×Ö·û
+				// ï¿½ï¿½ï¿½iï¿½ï¿½Îªï¿½ï¿½Ğ´ï¿½Ò²ï¿½ï¿½Çµï¿½Ò»ï¿½ï¿½ï¿½Ö·ï¿½
 				if (nodeName.charAt(i - 1) >= 65
 						&& nodeName.charAt(i - 1) <= 90) {
-					// Èç¹ûiÇ°Ò»¸ö×Ö·ûÒ²Îª´óĞ´
+					// ï¿½ï¿½ï¿½iÇ°Ò»ï¿½ï¿½ï¿½Ö·ï¿½Ò²Îªï¿½ï¿½Ğ´
 					if (i <= nodeName.length() - 2) {
-						// ´æÔÚºóÒ»¸ö×Ö·û£¨ÔÚindexÉÏ¼Ó1µÄÊ±ºò£¬Òª¿¼ÂÇÔ½½çµÄ·çÏÕ£©
+						// ï¿½ï¿½ï¿½Úºï¿½Ò»ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½indexï¿½Ï¼ï¿½1ï¿½ï¿½Ê±ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½Ä·ï¿½ï¿½Õ£ï¿½
 						if (nodeName.charAt(i + 1) >= 97
 								&& nodeName.charAt(i + 1) <= 122) {
-							// µ«ºóÒ»¸ö×Ö·ûÎªĞ¡Ğ´
+							// ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ö·ï¿½ÎªĞ¡Ğ´
 							buffer.append("_");
 						}
 					}
 				} else {
-					// ·´Ö®£¬Ôö¼Ó"_"
+					// ï¿½ï¿½Ö®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"_"
 					buffer.append("_");
 				}
 			}
@@ -51,7 +41,6 @@ public class BLL {
 			buffer.append(nodeName.charAt(i));
 		}
 
-		// ½«buffer×ª»»ÎªString£¬ÇÒ½«´ËString×ª»»Îª´óĞ´·µ»Ø
 		return buffer.toString().toUpperCase();
 	}
 

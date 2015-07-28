@@ -15,7 +15,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.hxy.IO.FileHelper;
 import com.hxy.client.BLL;
 
 /**
@@ -25,214 +24,223 @@ import com.hxy.client.BLL;
  *
  */
 public class DOMParser {
-	private String model;//Ω⁄µ„ƒ£∞Ê
-	private String groupModel;//groupΩ⁄µ„ƒ£∞Ê
-	private String groupModelTail;//groupΩ⁄µ„Œ≤≤ø
-	private String writeFileName;//Ω´∑µªÿµƒHisConfig–¥»Î¥ÀŒƒº˛
+    private String model;//ÔøΩ⁄µÔøΩƒ£ÔøΩÔøΩ
+    private String groupModel;//groupÔøΩ⁄µÔøΩƒ£ÔøΩÔøΩ
+    private String groupModelTail;//groupÔøΩ⁄µÔøΩŒ≤ÔøΩÔøΩ
+    private String writeFileName;//ÔøΩÔøΩÔøΩÔøΩÔøΩÿµÔøΩHisConfig–¥ÔøΩÔøΩÔøΩÔøΩƒºÔøΩ
 
-	public String getWriteFileName() {
-		return writeFileName;
-	}
+    public String getWriteFileName() {
+        return writeFileName;
+    }
 
-	public void setWriteFileName(String writeFileName) {
-		this.writeFileName = writeFileName;
-	}
+    public void setWriteFileName(String writeFileName) {
+        this.writeFileName = writeFileName;
+    }
 
-	public String getGroupModelTail() {
-		return groupModelTail;
-	}
+    public String getGroupModelTail() {
+        return groupModelTail;
+    }
 
-	public void setGroupModelTail(String groupModelTail) {
-		this.groupModelTail = groupModelTail;
-	}
+    public void setGroupModelTail(String groupModelTail) {
+        this.groupModelTail = groupModelTail;
+    }
 
-	public String getModel() {
-		return model;
-	}
+    public String getModel() {
+        return model;
+    }
 
-	public void setModel(String model) {
-		this.model = model;
-	}
+    public void setModel(String model) {
+        this.model = model;
+    }
 
-	public String getGroupModel() {
-		return groupModel;
-	}
+    public String getGroupModel() {
+        return groupModel;
+    }
 
-	public void setGroupModel(String groupModel) {
-		this.groupModel = groupModel;
-	}
+    public void setGroupModel(String groupModel) {
+        this.groupModel = groupModel;
+    }
 
-	DocumentBuilderFactory builderFactory = DocumentBuilderFactory
-			.newInstance();
+    DocumentBuilderFactory builderFactory = DocumentBuilderFactory
+            .newInstance();
 
-	/**
-	 * Load and parse XML file into DOM
-	 * 
-	 * @param filePath
-	 * @return Document
-	 */
-	public Document parseFromUri(String filePath) {
-		Document document = null;
-		try {
-			// DOM parser instance
-			DocumentBuilder builder = builderFactory.newDocumentBuilder();
-			// parse an XML file into a DOM tree
-			document = builder.parse(new File(filePath));
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		} catch (SAXException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return document;
-	}
+    /**
+     * Load and parse XML file into DOM
+     * 
+     * @param filePath
+     * @return Document
+     */
+    public Document parseFromUri(String filePath) {
+        Document document = null;
+        try {
+            // DOM parser instance
+            DocumentBuilder builder = builderFactory.newDocumentBuilder();
+            // parse an XML file into a DOM tree
+            document = builder.parse(new File(filePath));
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return document;
+    }
 
-	/**
-	 * Load from contended String
-	 * 
-	 * @param contendedString
-	 * @return Document
-	 */
-	public Document parseFromString(String contendedString) {
-		Document document = null;
-		StringReader sr = new StringReader(contendedString);
-		InputSource is = new InputSource(sr);
+    /**
+     * Load from contended String
+     * 
+     * @param contendedString
+     * @return Document
+     */
+    public Document parseFromString(String contendedString) {
+        Document document = null;
+        StringReader sr = new StringReader(contendedString);
+        InputSource is = new InputSource(sr);
 
-		try {
-			// DOM parser instance
-			DocumentBuilder builder = builderFactory.newDocumentBuilder();
-			// parse an XML file into a DOM tree
-			document = builder.parse(is);
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		} catch (SAXException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return document;
-	}
+        try {
+            // DOM parser instance
+            DocumentBuilder builder = builderFactory.newDocumentBuilder();
+            // parse an XML file into a DOM tree
+            document = builder.parse(is);
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return document;
+    }
 
-	/**
-	 * Convert XML to HisConfig
-	 * 
-	 * @param readXML
-	 * @param model
-	 * @param groupModel
-	 * @return
-	 */
-	public String getStringOfHisConfig(String xmlPath) {
-		StringBuffer buffer = new StringBuffer();// ¡Ÿ ±¥Ê¥¢Ω·π˚
+    /**
+     * Ëé∑Âèñ‰º†ÂÖ•XMLÁöÑÊ†πËäÇÁÇπÂêçÁß∞
+     * @param xmlContent
+     * @return
+     */
+    public String getXMLRoot(String xmlContent) {
+        DOMParser parser = new DOMParser();
+        Document document = parser.parseFromString(xmlContent);
+        Element rootElement = document.getDocumentElement();
+        return rootElement.getTagName();
+    }
 
-		// “‘œ¬±‰¡ø”√”⁄¥¶¿ÌDOMXML
-		DOMParser parser = new DOMParser();
-		Document document = parser.parseFromUri(xmlPath);
-		Element rootElement = document.getDocumentElement();
-		NodeList nodes = rootElement.getChildNodes();// Ω‚Œˆ∂¡»°µƒXML÷–µƒΩ⁄µ„Œ™nodes
-		if (nodes == null) {
-			return "";
-		}
+    /**
+     * Convert XML to HisConfig
+     * 
+     * @param readXML
+     * @param model
+     * @param groupModel
+     * @return
+     */
+    public String getStringOfHisConfig(String xmlContent) {
+        StringBuffer buffer = new StringBuffer();// ÔøΩÔøΩ ±ÔøΩÊ¥¢ÔøΩÔøΩÔøΩ
 
-		buffer.setLength(0);
-		for (int i = 0; i < nodes.getLength(); i++) {
-			Node node = nodes.item(i);
-			if (node.getNodeType() == Node.ELEMENT_NODE) {
-				Element element = (Element) node;// Ω´±È¿˙µƒµ•∏ˆΩ⁄µ„◊™ªØŒ™ø…∑Ω±„¥¶¿ÌµƒElement
+        // ÔøΩÔøΩÔøΩ¬±ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ⁄¥ÔøΩÔøΩÔøΩDOMXML
+        DOMParser parser = new DOMParser();
+        Document document = parser.parseFromString(xmlContent);
+        Element rootElement = document.getDocumentElement();
+        NodeList nodes = rootElement.getChildNodes();// ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ»°ÔøΩÔøΩXMLÔøΩ–µƒΩ⁄µÔøΩŒ™nodes
+        if (nodes == null) {
+            return "";
+        }
 
-				NodeList childNodes = element.getChildNodes();// ∑÷Œˆ¥ÀΩ⁄µ„µƒ◊”Ω⁄µ„
-				
-				//≈–∂œchildNodes «∑Òæﬂ”–ElementµƒΩ⁄µ„
-				Boolean hasElement = false;
-				for(int j = 0; j < childNodes.getLength(); j ++){
-					Node childNode = childNodes.item(j);
-					if(childNode.getNodeType() == Node.ELEMENT_NODE){
-						hasElement = true;
-						break;
-					}
-				}
+        buffer.setLength(0);
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node node = nodes.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) node;// ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩƒµÔøΩÔøΩÔøΩÔøΩ⁄µÔøΩ◊™ÔøΩÔøΩŒ™ÔøΩ…∑ÔøΩÔøΩ„¥¶ÔøΩÔøΩÔøΩElement
 
-				if (hasElement) {
-					// »Ù¥Ê‘⁄◊”Ω⁄µ„£¨µ˜”√◊”Ω⁄µ„Ω‚Œˆ£¨◊”Ω⁄µ„∫Ø ˝µ¸¥˙µ˜”√Ω‚Œˆø…ƒ‹µƒ◊”◊”Ω⁄µ„
-					buffer.append(getStringOfChildNode(rootElement, element));
-				} else {
-					// »Ù≤ª¥Ê‘⁄◊”Ω⁄µ„
-					String elementNodeName = element.getNodeName();// Ω⁄µ„µƒ√˚≥∆
-					String tempString = String.format(
-							this.getModel(),
-							elementNodeName,
-							BLL.convertToETFName(elementNodeName), "yes");
-					buffer.append(tempString);
-				}
-			}
-		}
+                NodeList childNodes = element.getChildNodes();// ÔøΩÔøΩÔøΩÔøΩÔøΩÀΩ⁄µÔøΩÔøΩÔøΩ”Ω⁄µÔøΩ
 
-		//Ω´∑µªÿΩ·π˚–¥»ÎŒƒº˛
-		FileHelper.appendContent(this.getWriteFileName(), "\n------------------------------------------------\n" + buffer.toString());
-		
-		return buffer.toString();
-	}
+                //ÔøΩ–∂ÔøΩchildNodesÔøΩ«∑ÔøΩÔøΩÔøΩÔøΩElementÔøΩƒΩ⁄µÔøΩ
+                Boolean hasElement = false;
+                for (int j = 0; j < childNodes.getLength(); j++) {
+                    Node childNode = childNodes.item(j);
+                    if (childNode.getNodeType() == Node.ELEMENT_NODE) {
+                        hasElement = true;
+                        break;
+                    }
+                }
 
-	/**
-	 * ∂¡»°◊”Ω⁄µ„£¨◊”Ω◊∂Œµ›πÈµ˜”√¥À∫Ø ˝∂¡»°◊”Ω⁄µ„÷±÷¡√ª”–◊”Ω⁄µ„
-	 * 
-	 * @param fatherElement
-	 * @param thisElement
-	 * @return
-	 */
-	private String getStringOfChildNode(Element fatherElement,
-			Element thisElement) {
-		StringBuffer buffer = new StringBuffer();// ¡Ÿ ±¥Ê¥¢µƒbuffer
+                if (hasElement) {
+                    // ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ”Ω⁄µ„£¨ÔøΩÔøΩÔøΩÔøΩÔøΩ”Ω⁄µÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ”Ω⁄µ„∫ØÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ√ΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ‹µÔøΩÔøΩÔøΩÔøΩ”Ω⁄µÔøΩ
+                    buffer.append(getStringOfChildNode(rootElement, element));
+                } else {
+                    // ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ”Ω⁄µÔøΩ
+                    String elementNodeName = element.getNodeName();// ÔøΩ⁄µÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ
+                    String tempString = String.format(
+                            this.getModel(),
+                            elementNodeName,
+                            BLL.convertToETFName(elementNodeName), "yes");
+                    buffer.append(tempString);
+                }
+            }
+        }
 
-		NodeList nodesOfChild = thisElement.getChildNodes();
+        return buffer.toString();
+    }
 
-		if (nodesOfChild == null) {
-			return "";
-		}
+    /**
+     * Áî®‰∫éËø≠‰ª£
+     * 
+     * @param fatherElement
+     * @param thisElement
+     * @return
+     */
+    private String getStringOfChildNode(Element fatherElement,
+            Element thisElement) {
+        StringBuffer buffer = new StringBuffer();// ÔøΩÔøΩ ±ÔøΩÊ¥¢ÔøΩÔøΩbuffer
 
-		buffer.setLength(0);
-		//  ◊œ»∆¥Ω”“ª∏ˆgroup≥ˆ¿¥
-		String elementNodeName = thisElement.getNodeName();
-		buffer.append(String.format(
-				this.getGroupModel(), elementNodeName,
-				BLL.convertToETFName(elementNodeName),
-				BLL.convertToETFName(elementNodeName) + "_NUM", "yes"));
+        NodeList nodesOfChild = thisElement.getChildNodes();
 
-		for (int i = 0; i < nodesOfChild.getLength(); i++) {
-			Node childNode = nodesOfChild.item(i);
+        if (nodesOfChild == null) {
+            return "";
+        }
 
-			if (childNode.getNodeType() == Node.ELEMENT_NODE) {
-				Element childElement = (Element) childNode;
-				
-				NodeList grandChildNodes = childElement.getChildNodes();//∑÷Œˆ «∑Ò¥Ê‘⁄ÀÔ◊”Ω⁄µ„
-				
-				//≈–∂œgrandChildNodes «∑Òæﬂ”–ElementΩ·µ„
-				Boolean hasElement = false;
-				for(int j = 0; j < grandChildNodes.getLength(); j ++){
-					Node grandChildNode = grandChildNodes.item(j);
-					if(grandChildNode.getNodeType() == Node.ELEMENT_NODE){
-						hasElement = true;
-						break;
-					}
-				}
-				
-				if(hasElement){
-					// ¥Ê‘⁄‘Úµ¸¥˙µ˜”√
-					buffer.append(getStringOfChildNode(thisElement, childElement));
-				} else {
-					// ≤ª¥Ê‘⁄‘Ú÷±Ω”ÃÌº”
-					String elementNodeNameChild = childElement.getNodeName();// Ω⁄µ„µƒ√˚≥∆
-					String tempString = String.format(
-							this.getModel(),
-							elementNodeNameChild,
-							BLL.convertToETFName(elementNodeNameChild), "yes");
-					buffer.append(tempString);
-				}
-			}
+        buffer.setLength(0);
+        // ÔøΩÔøΩÔøΩÔøΩ∆¥ÔøΩÔøΩ“ªÔøΩÔøΩgroupÔøΩÔøΩÔøΩÔøΩ
+        String elementNodeName = thisElement.getNodeName();
+        buffer.append(String.format(
+                this.getGroupModel(), elementNodeName,
+                BLL.convertToETFName(elementNodeName),
+                BLL.convertToETFName(elementNodeName) + "_NUM", "yes"));
 
-		}
-		buffer.append(this.getGroupModelTail());
+        for (int i = 0; i < nodesOfChild.getLength(); i++) {
+            Node childNode = nodesOfChild.item(i);
 
-		return buffer.toString();
-	}
+            if (childNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element childElement = (Element) childNode;
+
+                NodeList grandChildNodes = childElement.getChildNodes();//ÔøΩÔøΩÔøΩÔøΩÔøΩ«∑ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ”Ω⁄µÔøΩ
+
+                //ÔøΩ–∂ÔøΩgrandChildNodesÔøΩ«∑ÔøΩÔøΩÔøΩÔøΩElementÔøΩÔøΩÔøΩ
+                Boolean hasElement = false;
+                for (int j = 0; j < grandChildNodes.getLength(); j++) {
+                    Node grandChildNode = grandChildNodes.item(j);
+                    if (grandChildNode.getNodeType() == Node.ELEMENT_NODE) {
+                        hasElement = true;
+                        break;
+                    }
+                }
+
+                if (hasElement) {
+                    // ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ
+                    buffer.append(getStringOfChildNode(thisElement, childElement));
+                } else {
+                    // ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ÷±ÔøΩÔøΩÔøΩÔøΩÔøΩ
+                    String elementNodeNameChild = childElement.getNodeName();// ÔøΩ⁄µÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ
+                    String tempString = String.format(
+                            this.getModel(),
+                            elementNodeNameChild,
+                            BLL.convertToETFName(elementNodeNameChild), "yes");
+                    buffer.append(tempString);
+                }
+            }
+
+        }
+        buffer.append(this.getGroupModelTail());
+
+        return buffer.toString();
+    }
 }
