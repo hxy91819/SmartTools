@@ -4,6 +4,16 @@ import com.hxy.fileIO.DOMParser;
 
 public class Client {
 
+    /**
+     * 根据输入的XML，返回ETF XML。
+     * 
+     * ETF标签，可以在UserConst中自定义。
+     * 
+     * 输入的XML入参只能为Request和Response
+     * 
+     * @param inputXML
+     * @return
+     */
     public static String getStringOfHisConfig(String inputXML) {
         StringBuffer returnBuffer = new StringBuffer();
 
