@@ -112,6 +112,19 @@ public class DOMParser {
         }
         return document;
     }
+    
+    /**
+     * 判断输入是否是XML，避免其他函数解析是出错
+     * @param xmlContent
+     * @return
+     */
+    private boolean isXML(String xmlContent){
+        if(xmlContent.equals("") || xmlContent == null){
+            return false;
+        } else {
+            return xmlContent.startsWith("<");
+        }
+    }
 
     /**
      * 获取传入XML的根节点名称
@@ -119,6 +132,9 @@ public class DOMParser {
      * @return
      */
     public String getXMLRoot(String xmlContent) {
+        if(!isXML(xmlContent)){
+            return xmlContent;
+        }
         DOMParser parser = new DOMParser();
         Document document = parser.parseFromString(xmlContent);
         Element rootElement = document.getDocumentElement();
@@ -134,6 +150,10 @@ public class DOMParser {
      * @return
      */
     public String getStringOfHisConfig(String xmlContent) {
+        if(!isXML(xmlContent)){
+            return xmlContent;
+        }
+        
         StringBuffer buffer = new StringBuffer();// ��ʱ�洢���
 
         // ���±������ڴ���DOMXML
