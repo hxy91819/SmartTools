@@ -12,260 +12,294 @@ import jxl.Workbook;
 
 import com.hxy.content.StringHelper;
 import com.hxy.generateInsert.table.CMMTHISBUI;
+import com.hxy.generateInsert.table.cmmtwlst;
 
 /**
- * Éú³ÉÖ¸¶¨¹æÔòµÄInsertÓï¾ä
+ * ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Insertï¿½ï¿½ï¿½
  * 
  * @author hxy
  *
  */
 public class Client {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 //		Client.readFromExcelCMMTHISBUI();
-	    
-	}
+        Client.readFromExcelcmmtwlst();
+    }
 
-	/**
-	 * CMMTHISBUI:¸ù¾ÝÊäÈëµÄ²ÎÊýÉú³ÉÏàÓ¦µÄInsert SQL²¢·µ»Ø
-	 * 
-	 * @param bui_cd
-	 *            ½¨Öþ±àºÅ
-	 * @param bui_nm
-	 *            ½¨ÖþÃû³Æ
-	 * @param par_bui_cd
-	 *            ½¨ÖþµÄ¸¸½¨Öþ±àºÅ
-	 * @param bui_lv
-	 *            ½¨ÖþµÄ²ã¼¶
-	 * @param sort_no
-	 *            ½¨ÖþµÄÅÅÐòºÅ
-	 * @return Éú³ÉºÃµÄInsert SQL
-	 */
-	private static String setParamsCMMTHISBUI(String bui_cd, String bui_nm, String par_bui_cd, String bui_lv, String sort_no) {
-		// Éú³ÉÊ±¼ä´ÁµÄ¸ñÊ½Ä£°æ
-		Date currentTime = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-		String dateString = formatter.format(currentTime);
+    private static String setParamsCMMTHISBUI(String bui_cd, String bui_nm, String par_bui_cd, String bui_lv, String sort_no) {
+        // ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½Ê½Ä£ï¿½ï¿½
+        Date currentTime = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String dateString = formatter.format(currentTime);
 
-		// ´ÓÅäÖÃÎÄ¼þÖÐ¶ÁÈ¡²ÎÊý
-		String his_cd = Constant.his_cd;
-		String are_no = Constant.are_id;
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ð¶ï¿½È¡ï¿½ï¿½ï¿½ï¿½
+        String his_cd = Constant.his_cd;
+        String are_no = Constant.are_id;
 
-		String tm_smp = dateString;
-		String returnValString = "";
+        String tm_smp = dateString;
+        String returnValString = "";
 
-		CMMTHISBUI table = new CMMTHISBUI();
+        CMMTHISBUI table = new CMMTHISBUI();
 
-		table.setHis_cd(his_cd);
-		table.setAre_id(are_no);
-		table.setTm_smp(tm_smp);
-		table.setPar_bui_cd(par_bui_cd);
-		table.setSort_no(sort_no);
-		table.setBui_cd(bui_cd);
-		table.setBui_nm(bui_nm);
-		table.setBui_lv(bui_lv);
+        table.setHis_cd(his_cd);
+        table.setAre_id(are_no);
+        table.setTm_smp(tm_smp);
+        table.setPar_bui_cd(par_bui_cd);
+        table.setSort_no(sort_no);
+        table.setBui_cd(bui_cd);
+        table.setBui_nm(bui_nm);
+        table.setBui_lv(bui_lv);
 
-		returnValString = returnValString + table.getInsertSQL() + "\n";
-		return returnValString;
-	}
+        returnValString = returnValString + table.getInsertSQL() + "\n";
+        return returnValString;
+    }
 
-	/**
-	 * CMMTHISBUI:´ÓExcelÖÐ¶ÁÈ¡½¨ÖþÊý¾Ý£¬²¢´òÓ¡³öInsert SQL TODO ÐèÒª¸Ä½øËã·¨£¬ÐÞ¸Ä³ÉµÝ¹éÄ£Ê½£¬²¢¿ÉÒÔÈÎÒâ¶ÁÈ¡¶à¼¶½¨Öþ
-	 */
-	@SuppressWarnings("unused")
+    @SuppressWarnings("unused")
     private static void readFromExcelCMMTHISBUI() {
-		jxl.Workbook readwb = null;
-		try {
-			// ¹¹½¨Workbook¶ÔÏó, Ö»¶ÁWorkbook¶ÔÏó
-			// Ö±½Ó´Ó±¾µØÎÄ¼þ´´½¨Workbook
-			InputStream instream = new FileInputStream("E:/test.xls");
-			readwb = Workbook.getWorkbook(instream);
-			// SheetµÄÏÂ±êÊÇ´Ó0¿ªÊ¼
-			// »ñÈ¡µÚÒ»ÕÅSheet±í
-			Sheet readsheet = readwb.getSheet(0);
-			// »ñÈ¡Sheet±íÖÐËù°üº¬µÄ×ÜÁÐÊý
-			int rsColumns = readsheet.getColumns();
-			// »ñÈ¡Sheet±íÖÐËù°üº¬µÄ×ÜÐÐÊý
-			int rsRows = readsheet.getRows();
-			int bui_index_lv1 = 0;// Ò»¼¶½¨ÖþµÄ½¨ÖþÐòºÅ
-			TreeMap<Integer, Integer> mapLv1 = new TreeMap<Integer, Integer>();
-			System.out.println("--===================ÒÔÏÂÊÇÒ»¼¶½¨Öþ======================");
-			// ÏÈÉú³ÉÒ»¼¶½¨ÖþµÄ
-			for (int i = 1; i < rsRows; i++) {
-				int j = 0;
-				Cell cell = readsheet.getCell(j, i);
-				String cellContentsString = StringHelper.Trim(cell.getContents());
-				if (!cellContentsString.equals("")) {
-					bui_index_lv1++;
+        jxl.Workbook readwb = null;
+        try {
+            // ï¿½ï¿½ï¿½ï¿½Workbookï¿½ï¿½ï¿½ï¿½, Ö»ï¿½ï¿½Workbookï¿½ï¿½ï¿½ï¿½
+            // Ö±ï¿½Ó´Ó±ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½Workbook
+            InputStream instream = new FileInputStream("E:/test.xls");
+            readwb = Workbook.getWorkbook(instream);
+            // Sheetï¿½ï¿½ï¿½Â±ï¿½ï¿½Ç´ï¿½0ï¿½ï¿½Ê¼
+            // ï¿½ï¿½È¡ï¿½ï¿½Ò»ï¿½ï¿½Sheetï¿½ï¿½
+            Sheet readsheet = readwb.getSheet(0);
+            // ï¿½ï¿½È¡Sheetï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            int rsColumns = readsheet.getColumns();
+            // ï¿½ï¿½È¡Sheetï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            int rsRows = readsheet.getRows();
+            int bui_index_lv1 = 0;// Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            TreeMap<Integer, Integer> mapLv1 = new TreeMap<Integer, Integer>();
+            System.out.println("--===================ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½======================");
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            for (int i = 1; i < rsRows; i++) {
+                int j = 0;
+                Cell cell = readsheet.getCell(j, i);
+                String cellContentsString = StringHelper.Trim(cell.getContents());
+                if (!cellContentsString.equals("")) {
+                    bui_index_lv1++;
 
-					// Èç¹û´æÔÚÏÂ¼¶½¨Öþ£¬Ôò±£´æ
-					if ((i + 1 < rsRows) && (j + 1 < rsColumns)) {
-						Cell nextLvCell = readsheet.getCell(j + 1, i + 1);
-						String nextLvCellContent = StringHelper.Trim(nextLvCell.getContents());
-						if (!nextLvCellContent.equals("")) {
-							mapLv1.put(i, bui_index_lv1);
-						}
-					}
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò±£´ï¿½
+                    if ((i + 1 < rsRows) && (j + 1 < rsColumns)) {
+                        Cell nextLvCell = readsheet.getCell(j + 1, i + 1);
+                        String nextLvCellContent = StringHelper.Trim(nextLvCell.getContents());
+                        if (!nextLvCellContent.equals("")) {
+                            mapLv1.put(i, bui_index_lv1);
+                        }
+                    }
 
-					String returnSQL = Client.setParamsCMMTHISBUI(
-							Integer.toString(bui_index_lv1),
-							cellContentsString,
-							"-1",
-							"1",
-							Integer.toString(bui_index_lv1));// Ò»¼¶½¨Öþ¸¸ID¾ùÎª-1£¬¼¶±ðÎª1£¬ÐòºÅÓëbui_cdÏàÍ¬¡£
-					System.out.println(returnSQL);
-				}
-			}
+                    String returnSQL = Client.setParamsCMMTHISBUI(
+                            Integer.toString(bui_index_lv1),
+                            cellContentsString,
+                            "-1",
+                            "1",
+                            Integer.toString(bui_index_lv1));// Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½IDï¿½ï¿½Îª-1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½bui_cdï¿½ï¿½Í¬ï¿½ï¿½
+                    System.out.println(returnSQL);
+                }
+            }
 
-			System.out.println("--=====================ÒÔÏÂÊÇ¶þ¼¶½¨Öþ====================");
+            System.out.println("--=====================ï¿½ï¿½ï¿½ï¿½ï¿½Ç¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½====================");
 
-			int bui_index_lv2 = 0;// ¶þ¼¶½¨ÖþµÄ½¨ÖþÐòºÅ
-			TreeMap<Integer, Integer> mapLv2 = new TreeMap<Integer, Integer>();// ÓÃÓÚ±£´æ¶þ¼¶½¨Öþ¶ÔÓ¦¹ØÏµµÄmap£¬key£ºexcelÐÐºÅ£»Value£º´ËÐÐºÅÏÂ¶ÔÓ¦µÄbui_cd
-			Integer[] keyArrObjectLv1 = mapLv1.keySet().toArray(new Integer[0]);// maplv1µÄkeySet×ª»¯ÎªÈÝÒ×´¦ÀíµÄÊý×é
-			// ÔÙÉú³É¶þ¼¶½¨ÖþµÄ
-			for (int keyIndex = 0; keyIndex < keyArrObjectLv1.length; keyIndex++) {
-				int lvAdd = mapLv1.get(keyArrObjectLv1[keyIndex]) * 1000;// bui_cdÈ¨ÖØ
+            int bui_index_lv2 = 0;// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            TreeMap<Integer, Integer> mapLv2 = new TreeMap<Integer, Integer>();// ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Ïµï¿½ï¿½mapï¿½ï¿½keyï¿½ï¿½excelï¿½ÐºÅ£ï¿½Valueï¿½ï¿½ï¿½ï¿½ï¿½Ðºï¿½ï¿½Â¶ï¿½Ó¦ï¿½ï¿½bui_cd
+            Integer[] keyArrObjectLv1 = mapLv1.keySet().toArray(new Integer[0]);// maplv1ï¿½ï¿½keySet×ªï¿½ï¿½Îªï¿½ï¿½ï¿½×´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            // ï¿½ï¿½ï¿½ï¿½ï¿½É¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            for (int keyIndex = 0; keyIndex < keyArrObjectLv1.length; keyIndex++) {
+                int lvAdd = mapLv1.get(keyArrObjectLv1[keyIndex]) * 1000;// bui_cdÈ¨ï¿½ï¿½
 
-				// µÃ³öÐèÒª±éÀúµÄÐÐ¶ÎµÄ½áÎ²
-				int endRow = 0;
-				if (keyIndex + 1 < keyArrObjectLv1.length) {
-					endRow = keyArrObjectLv1[keyIndex + 1];
-				} else {
-					endRow = rsRows;
-				}
+                // ï¿½Ã³ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ÎµÄ½ï¿½Î²
+                int endRow = 0;
+                if (keyIndex + 1 < keyArrObjectLv1.length) {
+                    endRow = keyArrObjectLv1[keyIndex + 1];
+                } else {
+                    endRow = rsRows;
+                }
 
-				// Ã¿Ò»¸öÐÐ¶ÎµÄbui_index¾ùÓ¦ÖØÖÃ
-				bui_index_lv2 = 0;
+                // Ã¿Ò»ï¿½ï¿½ï¿½Ð¶Îµï¿½bui_indexï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
+                bui_index_lv2 = 0;
 
-				System.out.println("--------------------------------");
-				for (int i = keyArrObjectLv1[keyIndex] + 1; i < endRow; i++) {
-					int j = 1;
-					Cell cell = readsheet.getCell(j, i);
-					String cellContentsString = StringHelper.Trim(cell.getContents());
-					if (!cellContentsString.equals("")) {
-						bui_index_lv2++;
+                System.out.println("--------------------------------");
+                for (int i = keyArrObjectLv1[keyIndex] + 1; i < endRow; i++) {
+                    int j = 1;
+                    Cell cell = readsheet.getCell(j, i);
+                    String cellContentsString = StringHelper.Trim(cell.getContents());
+                    if (!cellContentsString.equals("")) {
+                        bui_index_lv2++;
 
-						// Èç¹û´æÔÚÏÂ¼¶½¨Öþ£¬Ôò±£´æ
-						if ((i + 1 < rsRows) && (j + 1 < rsColumns)) {
-							Cell nextLvCell = readsheet.getCell(j + 1, i + 1);
-							String nextLvCellContent = StringHelper.Trim(nextLvCell.getContents());
-							if (!nextLvCellContent.equals("")) {
-								mapLv2.put(i, bui_index_lv2 + lvAdd);
-							}
-						}
+                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò±£´ï¿½
+                        if ((i + 1 < rsRows) && (j + 1 < rsColumns)) {
+                            Cell nextLvCell = readsheet.getCell(j + 1, i + 1);
+                            String nextLvCellContent = StringHelper.Trim(nextLvCell.getContents());
+                            if (!nextLvCellContent.equals("")) {
+                                mapLv2.put(i, bui_index_lv2 + lvAdd);
+                            }
+                        }
 
-						String returnSQL = Client.setParamsCMMTHISBUI(
-								Integer.toString(bui_index_lv2 + lvAdd),
-								cellContentsString,
-								Integer.toString(mapLv1.get(keyArrObjectLv1[keyIndex])),
-								Integer.toString(j + 1),
-								Integer.toString(bui_index_lv2));
-						System.out.println(returnSQL);
-					}
-				}
-			}
+                        String returnSQL = Client.setParamsCMMTHISBUI(
+                                Integer.toString(bui_index_lv2 + lvAdd),
+                                cellContentsString,
+                                Integer.toString(mapLv1.get(keyArrObjectLv1[keyIndex])),
+                                Integer.toString(j + 1),
+                                Integer.toString(bui_index_lv2));
+                        System.out.println(returnSQL);
+                    }
+                }
+            }
 
-			System.out.println("--====================ÒÔÏÂÊÇÈý¼¶½¨Öþ=====================");
+            System.out.println("--====================ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½=====================");
 
-			// Éú³ÉÈý¼¶½¨ÖþµÄ
-			int bui_index_lv3 = 0;// Èý¼¶½¨ÖþµÄ½¨ÖþÐòºÅ
-			TreeMap<Integer, Long> mapLv3 = new TreeMap<Integer, Long>();
-			Integer[] keyArrObjectLv2 = mapLv2.keySet().toArray(new Integer[0]);
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            int bui_index_lv3 = 0;// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            TreeMap<Integer, Long> mapLv3 = new TreeMap<Integer, Long>();
+            Integer[] keyArrObjectLv2 = mapLv2.keySet().toArray(new Integer[0]);
 
-			for (int keyIndex = 0; keyIndex < keyArrObjectLv2.length; keyIndex++) {
-				long lvAdd = mapLv2.get(keyArrObjectLv2[keyIndex]) * 1000;
-				// µÃ³öÐèÒª±éÀúµÄÐÐ¶ÎµÄ½áÎ²
-				int endRow = 0;
-				if (keyIndex + 1 < keyArrObjectLv2.length) {
-					endRow = keyArrObjectLv2[keyIndex + 1];
-				} else {
-					endRow = rsRows;
-				}
+            for (int keyIndex = 0; keyIndex < keyArrObjectLv2.length; keyIndex++) {
+                long lvAdd = mapLv2.get(keyArrObjectLv2[keyIndex]) * 1000;
+                // ï¿½Ã³ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ÎµÄ½ï¿½Î²
+                int endRow = 0;
+                if (keyIndex + 1 < keyArrObjectLv2.length) {
+                    endRow = keyArrObjectLv2[keyIndex + 1];
+                } else {
+                    endRow = rsRows;
+                }
 
-				// Ã¿Ò»¸öÐÐ¶ÎµÄbui_index¾ùÓ¦ÖØÖÃ
-				bui_index_lv3 = 0;
+                // Ã¿Ò»ï¿½ï¿½ï¿½Ð¶Îµï¿½bui_indexï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
+                bui_index_lv3 = 0;
 
-				System.out.println("--------------------------------");
-				// ¶ÁÈ¡¶þ¼¶½¨ÖþÖ®¼äµÄÊý¾Ý£¬¼´Èý¼¶½¨Öþ
-				for (int i = keyArrObjectLv2[keyIndex] + 1; i < endRow; i++) {
-					int j = 2;
-					Cell cell = readsheet.getCell(j, i);
-					String cellContentsString = StringHelper.Trim(cell.getContents());
-					if (!cellContentsString.equals("")) {
-						bui_index_lv3++;
+                System.out.println("--------------------------------");
+                // ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                for (int i = keyArrObjectLv2[keyIndex] + 1; i < endRow; i++) {
+                    int j = 2;
+                    Cell cell = readsheet.getCell(j, i);
+                    String cellContentsString = StringHelper.Trim(cell.getContents());
+                    if (!cellContentsString.equals("")) {
+                        bui_index_lv3++;
 
-						// Èç¹û´æÔÚÏÂ¼¶½¨Öþ£¬Ôò±£´æ
-						if ((i + 1 < rsRows) && (j + 1 < rsColumns)) {
-							Cell nextLvCell = readsheet.getCell(j + 1, i + 1);
-							String nextLvCellContent = StringHelper.Trim(nextLvCell.getContents());
-							if (!nextLvCellContent.equals("")) {
-								mapLv3.put(i, bui_index_lv3 + lvAdd);
-							}
-						}
+                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò±£´ï¿½
+                        if ((i + 1 < rsRows) && (j + 1 < rsColumns)) {
+                            Cell nextLvCell = readsheet.getCell(j + 1, i + 1);
+                            String nextLvCellContent = StringHelper.Trim(nextLvCell.getContents());
+                            if (!nextLvCellContent.equals("")) {
+                                mapLv3.put(i, bui_index_lv3 + lvAdd);
+                            }
+                        }
 
-						String returnSQL = Client.setParamsCMMTHISBUI(
-								Long.toString(bui_index_lv3 + lvAdd), cellContentsString,
-								Integer.toString(mapLv2.get(keyArrObjectLv2[keyIndex])),
-								Integer.toString(j + 1),
-								Integer.toString(bui_index_lv3));
+                        String returnSQL = Client.setParamsCMMTHISBUI(
+                                Long.toString(bui_index_lv3 + lvAdd), cellContentsString,
+                                Integer.toString(mapLv2.get(keyArrObjectLv2[keyIndex])),
+                                Integer.toString(j + 1),
+                                Integer.toString(bui_index_lv3));
 
-						System.out.println(returnSQL);
-					}
-				}
-			}
+                        System.out.println(returnSQL);
+                    }
+                }
+            }
 
-			System.out.println("--=====================ÒÔÏÂÊÇËÄ¼¶½¨Öþ====================");
+            System.out.println("--=====================ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½====================");
 
-			// Éú³ÉËÄ¼¶½¨ÖþµÄ
-			int bui_index_lv4 = 0;// ËÄ¼¶½¨ÖþµÄ½¨ÖþÐòºÅ
-			TreeMap<Integer, Long> mapLv4 = new TreeMap<Integer, Long>();
-			Integer[] keyArrObjectLv3 = mapLv3.keySet().toArray(new Integer[0]);
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            int bui_index_lv4 = 0;// ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            TreeMap<Integer, Long> mapLv4 = new TreeMap<Integer, Long>();
+            Integer[] keyArrObjectLv3 = mapLv3.keySet().toArray(new Integer[0]);
 
-			for (int keyIndex = 0; keyIndex < keyArrObjectLv3.length; keyIndex++) {
-				long lvAdd = mapLv3.get(keyArrObjectLv3[keyIndex]) * 1000;
+            for (int keyIndex = 0; keyIndex < keyArrObjectLv3.length; keyIndex++) {
+                long lvAdd = mapLv3.get(keyArrObjectLv3[keyIndex]) * 1000;
 
-				// µÃ³öÐèÒª±éÀúµÄÐÐ¶ÎµÄ½áÎ²
-				int endRow = 0;
-				if (keyIndex + 1 < keyArrObjectLv3.length) {
-					endRow = keyArrObjectLv3[keyIndex + 1];
-				} else {
-					endRow = rsRows;
-				}
+                // ï¿½Ã³ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ÎµÄ½ï¿½Î²
+                int endRow = 0;
+                if (keyIndex + 1 < keyArrObjectLv3.length) {
+                    endRow = keyArrObjectLv3[keyIndex + 1];
+                } else {
+                    endRow = rsRows;
+                }
 
-				// Ã¿Ò»¸öÐÐ¶ÎµÄbui_index¾ùÓ¦ÖØÖÃ
-				bui_index_lv4 = 0;
+                // Ã¿Ò»ï¿½ï¿½ï¿½Ð¶Îµï¿½bui_indexï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
+                bui_index_lv4 = 0;
 
-				System.out.println("--------------------------------");
-				// ¶ÁÈ¡Èý¼¶½¨ÖþÖ®¼äµÄÊý¾Ý£¬¼´ËÄ¼¶½¨Öþ
-				for (int i = keyArrObjectLv3[keyIndex] + 1; i < endRow; i++) {
-					int j = 3;
-					Cell cell = readsheet.getCell(j, i);
-					String cellContentsString = StringHelper.Trim(cell.getContents());
-					if (!cellContentsString.equals("")) {
-						bui_index_lv4++;
+                System.out.println("--------------------------------");
+                // ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½
+                for (int i = keyArrObjectLv3[keyIndex] + 1; i < endRow; i++) {
+                    int j = 3;
+                    Cell cell = readsheet.getCell(j, i);
+                    String cellContentsString = StringHelper.Trim(cell.getContents());
+                    if (!cellContentsString.equals("")) {
+                        bui_index_lv4++;
 
-						// Èç¹û´æÔÚÏÂ¼¶½¨Öþ£¬Ôò±£´æ
-						if ((i + 1 < rsRows) && (j + 1 < rsColumns)) {
-							Cell nextLvCell = readsheet.getCell(j + 1, i + 1);
-							String nextLvCellContent = StringHelper.Trim(nextLvCell.getContents());
-							if (!nextLvCellContent.equals("")) {
-								mapLv4.put(i, bui_index_lv4 + lvAdd);
-							}
-						}
+                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò±£´ï¿½
+                        if ((i + 1 < rsRows) && (j + 1 < rsColumns)) {
+                            Cell nextLvCell = readsheet.getCell(j + 1, i + 1);
+                            String nextLvCellContent = StringHelper.Trim(nextLvCell.getContents());
+                            if (!nextLvCellContent.equals("")) {
+                                mapLv4.put(i, bui_index_lv4 + lvAdd);
+                            }
+                        }
 
-						String returnSQL = Client.setParamsCMMTHISBUI(
-								Long.toString(bui_index_lv4 + lvAdd), cellContentsString,
-								Long.toString(mapLv3.get(keyArrObjectLv3[keyIndex])),
-								Integer.toString(j + 1),
-								Integer.toString(bui_index_lv4));
-						System.out.println(returnSQL);
-					}
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			readwb.close();
-		}
-	}
+                        String returnSQL = Client.setParamsCMMTHISBUI(
+                                Long.toString(bui_index_lv4 + lvAdd), cellContentsString,
+                                Long.toString(mapLv3.get(keyArrObjectLv3[keyIndex])),
+                                Integer.toString(j + 1),
+                                Integer.toString(bui_index_lv4));
+                        System.out.println(returnSQL);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            readwb.close();
+        }
+    }
+
+    /**
+     * é…ç½®å¾®ä¿¡ç™½åå•
+     * 
+     * @return
+     */
+    private static String setParmascmmtwlst(String usrName, String opnId, String bus_cnl) {
+        String his_cd = Constant.his_cd;
+        
+        cmmtwlst table = new cmmtwlst();
+        table.setHis_cd(his_cd);
+        table.setOpn_id(opnId);
+        table.setUsr_nm(usrName);
+        table.setBus_cnl(bus_cnl);
+        table.setW_sts("1");
+        
+        return table.getInsertSQL();
+    }
+    
+    /**
+     * ä»ŽExcelä¸­è¯»å–ä¿¡æ¯ç”Ÿæˆinsert
+     * 
+     * Excelæ ¼å¼ï¼šusr_nm + opn_id + bus_cnl
+     * @return
+     */
+    private static void readFromExcelcmmtwlst(){
+        jxl.Workbook readwb = null;
+        try
+        {
+            InputStream instream = new FileInputStream("E:/test.xls");
+            readwb = Workbook.getWorkbook(instream);
+            Sheet readsheet = readwb.getSheet(0);
+            int rsColumns = readsheet.getColumns();
+            int rsRows = readsheet.getRows();
+            for (int i = 0; i < rsRows; i++)
+            {
+                Cell cell1 = readsheet.getCell(0, i);
+                String usr_nm = cell1.getContents();
+                Cell cell2 = readsheet.getCell(1, i);
+                String opn_id = cell2.getContents();
+                Cell cell3 = readsheet.getCell(2, i);
+                String bus_cnl = cell3.getContents();
+
+                System.out.println(Client.setParmascmmtwlst(usr_nm, opn_id, bus_cnl));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            readwb.close();
+        }
+    }
 }

@@ -1,11 +1,11 @@
 package com.hxy.generateInsert;
 
 /**
- * ³£Á¿¶¨Òå
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * @author hxy
  *
  */
 public class Constant {
-	public static String his_cd = "26";//Ò½Ôº±àÂë
-	public static String are_id = "1";//ÔºÇø±àÂë
+	public static String his_cd = "40";//Ò½Ôºï¿½ï¿½ï¿½ï¿½
+	public static String are_id = "1";//Ôºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 }
