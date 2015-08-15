@@ -10,13 +10,33 @@ import com.hxy.content.StringHelper;
  */
 public class SqlConvertor {
     public static void main(String[] args) {
-        String forTransString = "sadfj;lsdjfa;lsdf";
-        System.out.println(SqlConvertor.getSQL(forTransString));
+//        String forTransString = "";
+//        SqlConvertor test = new SqlConvertor();
+//        String path = PathHelper.getProjectPathWithoutBin(test);
+//        forTransString = FileHelper.readFileByChars(path + "/test.txt");
+//        System.out.println("forTransString: " + forTransString);
+//        System.out.println("result: " + SqlConvertor.getSQL(forTransString));
     }
 
     public static String getSQL(String forConvert) {
+        System.out.println("forConvert: " + forConvert);
+        
+        //判断是否为空
         if (forConvert.equals("")) {
-            return "--[Empty error]";
+            return "[Empty error]" + forConvert;
+        }
+        
+        //判断是否完全是空格
+        forConvert = StringHelper.Trim(forConvert);
+        if (forConvert.equals("")) {
+            return "[only space error]" + forConvert;
+        }
+
+        //判断末尾处是否有回车，去除末尾的所有回车符
+        int index = 0;
+        while (forConvert.endsWith("\n") || forConvert.endsWith("\r") || forConvert.endsWith(" ")) {
+            System.out.println("Clear return/space symbol by " + (++index) + " time(s)!");
+            forConvert = forConvert.substring(0, forConvert.length() - 1);
         }
 
         String[] splitStrings = forConvert.split("\\]\\:");//多个字符需要使用正则表达式\\转义。
@@ -25,7 +45,7 @@ public class SqlConvertor {
             //此时分割失败，尝试使用“][”来进行分割
             splitStrings = forConvert.split("\\]\\[");
             if (splitStrings.length < 2) {
-                return "--[Format error]" + forConvert;
+                return "[Format error]" + forConvert;
             }
         }
 

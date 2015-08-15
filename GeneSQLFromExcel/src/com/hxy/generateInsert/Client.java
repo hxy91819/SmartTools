@@ -15,8 +15,7 @@ import com.hxy.generateInsert.table.CMMTHISBUI;
 import com.hxy.generateInsert.table.cmmtwlst;
 
 /**
- * ����ָ�������Insert���
- * 
+ * 生成insert语句，方便插入数据表，部分会从E:/test.xls位置读取Excel内容以插入。
  * @author hxy
  *
  */
@@ -55,7 +54,12 @@ public class Client {
         return returnValString;
     }
 
-    @SuppressWarnings("unused")
+    /**
+     * 从Excel中读取信息生成insert
+     * 
+     * Excel格式：参考管理网站标准格式
+     * @return
+     */
     private static void readFromExcelCMMTHISBUI() {
         jxl.Workbook readwb = null;
         try {
@@ -277,6 +281,8 @@ public class Client {
      * @return
      */
     private static void readFromExcelcmmtwlst(){
+        //select zfb_usr_nm, opn_id, bus_cnl from cmmtusr where his_cd = '40' and bus_cnl = 'ZFB' and zfb_usr_nm is not null;
+        //select wx_nic_nm, opn_id, bus_cnl from cmmtusr where his_cd = '27' and wx_nic_nm like '%香芋%';
         jxl.Workbook readwb = null;
         try
         {

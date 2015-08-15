@@ -1,0 +1,9 @@
+[SELECT USR_NO, KEY_DT, MSG_WEK_NUM
+             FROM CMCTSERCUS
+            WHERE HIS_CD = ?
+             AND SER_ID = ?
+             AND KEY_DT >= ?
+             AND MSG_WEK_NUM < ?
+             AND BUS_CNL = ?]:[[49, 003, 20120825, 138, WX]]
+
+
