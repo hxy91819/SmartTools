@@ -3,30 +3,26 @@ package com.hxy.IO;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 
 public class FileHelper {
 
 	/**
-	 * 以字符为单位读取文件，常用于读文本，数字等类型的文件
-	 * 
-	 * Mod by Hxy 2015-05-22 修改原函数，返回一个String。采用一次读取一个字节的方法。
+	 * 鎸夌収瀛楃璇诲彇鏂囦欢鍐呭
 	 */
 	public static String readFileByChars(String fileName) {
 		File file = new File(fileName);
 		Reader reader = null;
-		StringBuffer buffer = new StringBuffer();//中间存储。
+		StringBuffer buffer = new StringBuffer();
 		try {
-			buffer.setLength(0);//清空buffer
-			// 一次读一个字符
+			buffer.setLength(0);
 			reader = new InputStreamReader(new FileInputStream(file));
 			int tempchar;
 			while ((tempchar = reader.read()) != -1) {
-				// 对于windows下，\r\n这两个字符在一起时，表示一个换行。
-				// 但如果这两个字符分开显示时，会换两次行。
-				// 因此，屏蔽掉\r，或者屏蔽\n。否则，将会多出很多空行。
 				if (((char) tempchar) != '\r') {
 					//System.out.print((char) tempchar);
 					buffer.append((char)tempchar);
@@ -48,7 +44,6 @@ public class FileHelper {
 	 */
 	public static void appendContent(String fileName, String content){
         try {
-            //打开一个写文件器，构造函数中的第二个参数true表示以追加形式写文件
             FileWriter writer = new FileWriter(fileName, true);
             writer.write(content);
             writer.close();
@@ -56,4 +51,32 @@ public class FileHelper {
             e.printStackTrace();
         }
 	}
+	
+    /**
+     * 鑾峰彇鏂囦欢鎸囧畾鐩綍涓嬬殑鏂囦欢鍒楄〃
+     * @param filePath
+     * @return
+     */
+    public static ArrayList<File> getFiles(String filePath, final String filterName){
+        ArrayList<File> retValArr = new ArrayList<File>();
+        
+        File file = new File(filePath);
+        
+        file.mkdir();
+        
+        String[] namesStrings = file.list(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                if(name.endsWith(filterName)){
+                    return true;
+                }
+                return false;
+            }
+        });
+        
+        for(String nameString: namesStrings){
+            retValArr.add(new File(filePath + nameString));
+        }
+        return retValArr;
+    }
 }

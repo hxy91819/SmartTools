@@ -13,72 +13,105 @@ import com.hxy.content.DateHelper;
 import com.hxy.content.StringHelper;
 
 /**
- * µ÷ÓÃÎÒÃÇµÄÎ¢ÌáÐÑ½Ó¿Ú
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Çµï¿½Î¢ï¿½ï¿½ï¿½Ñ½Ó¿ï¿½
+ * 
  * @author hxy
  *
  */
 public class WeitixingCall {
-	public static void main(String[] args)  {
-		WeitixingCall client = new WeitixingCall();
-		//·ÃÎÊWebService±ØÐëµÄ²ÎÊý
-		String wsURL = "http://uat.gzhc365.com/openapi/services/ws";
-		String packageString = "http://uat.gzhc365.com/openapi";
-		String methodName = "healthService";
-		
-		//Éú³ÉÐèÒª´«ÈëµÄxml
-		String filePath = PathHelper.getProjectPathWithoutBin((Object) client)
-				+ "Files\\Input.xml";// »ñÈ¡´ý×ª»»Ö¸ÁîÎÄ¼þµÄÂ·¾¶µØÖ·
-		String formaterString = FileHelper.readFileByChars(filePath);// ¶ÁÈ¡ÎÄ¼þÄÚÈÝµ½StringÖÐ
-		
-		String nowString = DateHelper.getNow("yyyy-MM-dd HH:mm:ss");
-		String key = "CDCHQRMYY";
-		
-		String md5 = StringHelper.getMD5(nowString + key).toUpperCase();
-		
-		md5 = "953EF61E819E412323256B58DBDA7ADB";//Êý¾Ý¿âÅäÖÃµÄ
-		
-		String inputString = String.format(formaterString, nowString, key, md5);
+    public static void main(String[] args) {
 
-		System.out.println("intputString:\n" + inputString);
-		
-		Object[] opAddEntryArgs = new Object[1];
-		opAddEntryArgs[0] = (Object) inputString;
+    }
 
-		try {
-			System.out.println(CallWS(wsURL, packageString, methodName, opAddEntryArgs));
-		} catch (AxisFault e) {
-			e.printStackTrace();
-		}
-	}
+    private static String callWTX(String inputFileName) {
+        WeitixingCall client = new WeitixingCall();
+        String wsURL = "http://uat.gzhc365.com/openapi/services/ws";
+        String packageString = "http://uat.gzhc365.com/openapi";
+        String methodName = "healthService";
 
-	/**
-	 * 
-	 * @param wsURL
-	 *            WebServiceµØÖ·
-	 * @param packageString
-	 *            WebService°üÃû
-	 * @param methodName
-	 *            WebService·½·¨Ãû
-	 * @param opAddEntryArgs
-	 *            Ö¸¶¨·½·¨²ÎÊý
-	 * @throws AxisFault
-	 */
-	private static String CallWS(String wsURL, String packageString, String methodName, Object[] opAddEntryArgs)
-			throws AxisFault {
-		RPCServiceClient serviceClient = new RPCServiceClient();
-		Options options = serviceClient.getOptions();
-		// Ö¸¶¨µ÷ÓÃWebServiceµÄURL
-		EndpointReference targetEPR = new EndpointReference(wsURL);
-		options.setTo(targetEPR);
+        String filePath = PathHelper.getProjectPathWithoutBin((Object) client) + "Files\\" + inputFileName;
+        String formaterString = FileHelper.readFileByChars(filePath);// ï¿½ï¿½È¡ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Ýµï¿½Stringï¿½ï¿½
 
-		// Ö¸¶¨Òªµ÷ÓÃµÄ¼ÆËã»úÆ÷ÖÐµÄ·½·¨¼°WSDLÎÄ¼þµÄÃüÃû¿Õ¼ä£ºtest.hxy.com¡£
-		QName opAddEntry = new QName(packageString, methodName);
+        String nowString = DateHelper.getNow("yyyy-MM-dd HH:mm:ss");
+        String key = "CDCHQRMYY";
 
-		// Ö¸¶¨plus·½·¨·µ»ØÖµµÄÊý¾ÝÀàÐÍµÄClass¶ÔÏó
-		@SuppressWarnings("rawtypes")
-		Class[] classes = new Class[] { String.class };
+        String md5 = StringHelper.getMD5(nowString + key).toUpperCase();
 
-		// µ÷ÓÃplus·½·¨²¢Êä³ö¸Ã·½·¨µÄ·µ»ØÖµ
-		return serviceClient.invokeBlocking(opAddEntry, opAddEntryArgs, classes)[0].toString();
-	}
+        md5 = "953EF61E819E412323256B58DBDA7ADB";//ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½Ãµï¿½
+
+        String inputString = String.format(formaterString, nowString, key, md5);
+
+        System.out.println("intputString:\n" + inputString);
+
+        Object[] opAddEntryArgs = new Object[1];
+        opAddEntryArgs[0] = (Object) inputString;
+
+        String output = "";
+        try {
+            output = CallWS(wsURL, packageString, methodName, opAddEntryArgs);
+        } catch (AxisFault e) {
+            e.printStackTrace();
+        }
+        return output;
+    }
+
+    /**
+     * æ²ˆé˜³å…­é™¢
+     * 
+     * @param inputFileName
+     * @return
+     */
+    private static String callSY6(String inputFileName) {
+        WeitixingCall client = new WeitixingCall();
+        String wsURL = "http://59.46.42.87/HaiciHospService.asmx?wsdl ";
+        String packageString = "http://zlsoft.com/haici";
+        String methodName = "NetTest";
+
+        String filePath = PathHelper.getProjectPathWithoutBin((Object) client) + "Files\\" + inputFileName;
+        String formaterString = FileHelper.readFileByChars(filePath);
+
+        String inputString = formaterString;
+
+        System.out.println("intputString:\n" + inputString);
+
+        Object[] opAddEntryArgs = new Object[1];
+        opAddEntryArgs[0] = (Object) inputString;
+
+        String output = "";
+        try {
+            output = CallWS(wsURL, packageString, methodName, opAddEntryArgs);
+        } catch (AxisFault e) {
+            e.printStackTrace();
+        }
+        return output;
+    }
+
+    /**
+     * 
+     * @param wsURL
+     * @param packageString
+     * @param methodName
+     *            WebServiceï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @param opAddEntryArgs
+     *            Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @throws AxisFault
+     */
+    private static String CallWS(String wsURL, String packageString, String methodName, Object[] opAddEntryArgs)
+            throws AxisFault {
+        RPCServiceClient serviceClient = new RPCServiceClient();
+        Options options = serviceClient.getOptions();
+        // Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½WebServiceï¿½ï¿½URL
+        EndpointReference targetEPR = new EndpointReference(wsURL);
+        options.setTo(targetEPR);
+
+        // Ö¸ï¿½ï¿½Òªï¿½ï¿½ï¿½ÃµÄ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÐµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½WSDLï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ä£ºtest.hxy.comï¿½ï¿½
+        QName opAddEntry = new QName(packageString, methodName);
+
+        // Ö¸ï¿½ï¿½plusï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½Classï¿½ï¿½ï¿½ï¿½
+        @SuppressWarnings("rawtypes")
+        Class[] classes = new Class[] { String.class };
+
+        // ï¿½ï¿½ï¿½ï¿½plusï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½Öµ
+        return serviceClient.invokeBlocking(opAddEntry, opAddEntryArgs, classes)[0].toString();
+    }
 }
